@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netflix Profiles</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<h1>Quem está assistindo:</h1>
+<!-- Lista de perfis -->
+<div class="list-profiles">
+  <ul id="profiles">
+    <li>
+      <a href="#" onclick="selectProfile('perfil1')">
+        <div class="profile-icon" data-profile-guid="S7FRFIGYDJF63J4WBYMGTXVPEM" style="background-image: url('https://occ-0-626-185.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABa4H-BhpemX8BPiSDifaSo0ti5r7ZF-GV_jKQqnAP2-nvXUiYJ4QqCuBh3aMpGyR_txo15KrnOW14wa4nJe6Hw9w84YK6pAP-ebk.png?r=02d');"></div>
+        Perfil 1
+      </a>
+    </li>
+    <li>
+      <a href="#" onclick="selectProfile('perfil2')">
+        <div class="profile-icon" data-profile-guid="LFIW52B56VGTZCSEXPTSAB4OSQ" style="background-image: url('https://occ-0-626-185.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABQiedlLSd6BWkhT_heykE_1N01eYwzSUikGujTwfTjLNCYE_u5OVxuu4blLJX_tx-Frx0zOtTZvK1c5EhsHzMe_Uhja0-DVT-6w4.png?r=ae0');"></div>
+        Perfil 2
+      </a>
+    </li>
+    <li>
+      <a href="#" onclick="selectProfile('perfil3')">
+        <div class="profile-icon" data-profile-guid="KCH6AYPS2NABTOD4OZBHHCUENM" style="background-image: url('https://occ-0-626-185.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABRbBY22PMiz2fmiDNQlER7I2c0G9VshcUxat8KD1fwz_krUI9sp4YPECM7knwPmd30u-LRzDy_xP4pliFp7k9lBhnV2mUDUMi17Q3MS-myArN4yN5TOW9tQRIYoceu3h6QURd2hu2aNdih6KV5A.png?r=dd4');"></div>
+        Perfil 3
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- Ícone de adicionar perfil -->
+<div class="addProfileIcon icon-tvuiAdd" onclick="openModal()">+</div>
+
+<!-- Modal de adicionar perfil -->
+<div id="addProfileModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Novo Perfil:</h2>
+    <input type="text" id="newProfileName" placeholder="Nome do perfil">
+    <input type="file" id="profileImage" accept="image/*" onchange="previewImage(event)">
+    <img id="preview" src="#" alt="Sua imagem" style="display:none; max-width: 100px; max-height: 100px;">
+    <button onclick="createProfile()">Criar perfil</button>
+  </div>
+</div>
+
+<script>
+// Função para abrir o modal
+function openModal() {
+  document.getElementById('addProfileModal').style.display = 'block';
+}
+
+// Função para fechar o modal
+function closeModal() {
+  document.getElementById('addProfileModal').style.display = 'none';
+}
+
+// Função para selecionar um perfil existente
+function selectProfile(profile) {
+  // Redireciona para a página do perfil selecionado
+  // Aqui você pode colocar os links para as páginas dos perfis
+  switch(profile) {
+    case 'perfil1':
+      window.location.href = 'perfil1.html';
+      break;
+    case 'perfil2':
+      window.location.href = 'perfil2.html';
+      break;
+    case 'perfil3':
+      window.location.href = 'perfil3.html';
+      break;
+    // Adicione mais casos conforme necessário
+    default:
+      console.log('Perfil não reconhecido');
+  }
+}
+
+// Função para criar um novo perfil
+function createProfile() {
+  // Obtém o nome do novo perfil
+  var newProfileName = document.getElementById('newProfileName').value;
+  
+  // Obtém a imagem do perfil
+  var profileImage = document.getElementById('profileImage').files[0];
+  
+  // Verifica se foi fornecido um nome e uma imagem
+  if (newProfileName.trim() !== '' && profileImage) {
+    // Realiza o upload da imagem (aqui você pode enviar para o servidor)
+    // Vou apenas mostrar um alerta com o nome e a imagem selecionada
+    alert('Nome do perfil: ' + newProfileName + '\nImagem do perfil: ' + profileImage.name);
+    
+    closeModal(); // Fecha o modal após criar o perfil
+  } else {
+    alert('Por favor, insira um nome e selecione uma imagem para o perfil.');
+  }
+}
+
+// Função para visualizar a imagem selecionada antes de enviar
+function previewImage(event) {
+  var preview = document.getElementById('preview');
+  var file = event.target.files[0];
+  var reader = new FileReader();
+  
+  reader.onloadend = function() {
+    preview.src = reader.result;
+    preview.style.display = 'block';
+  }
+  
+  if (file) {
+    reader.readAsDataURL(file);
+  } else {
+    preview.src = '';
+    preview.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>
